@@ -82,10 +82,11 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ecommerce',
-        'USER': 'postgres',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
+        'NAME': 'ddq5hevkjtotag',
+        'USER': 'inkyxcvfvvvswf',
+        'PASSWORD': '7f6ef7199fbb7e8ee38a0da47d9b1b27732e8e6d50ba62ad94b682642fc8dad3',
+        'HOST': 'ec2-52-6-77-239.compute-1.amazonaws.com',
+        'PORT': 5432,
     }
 }
 
@@ -127,14 +128,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'static'
+STATIC_ROOT =  os.path.join(BASE_DIR, 'static')
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
