@@ -32,7 +32,7 @@ class Product(models.Model):
     img1 = models.ImageField(null=True, blank=True, upload_to='product/')
     img2 = models.ImageField(null=True, blank=True, upload_to='product/')
     img3 = models.ImageField(null=True, blank=True, upload_to='product/')
-    publish_date = models.DateField(default=timezone.now)
+    publish_date = models.DateField(default=timezone.now, blank=True)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

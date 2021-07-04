@@ -25,7 +25,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECRET_KEY = 'django-insecure-i1xr%h1ymjoc#p%3$f^l4$xtw%#1xhdv3u_lv)xf6u6&zbs37e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['ecart-online.herokuapp.com']
 
