@@ -1,1 +1,1 @@
-web: waitress-serve --port=$PORT --host=127.0.0.1 ecommerce.wsgi:application
+web: waitress-serve --port=$PORT ecommerce.wsgi:application
