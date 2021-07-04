@@ -1,0 +1,29 @@
+{% extends 'ecart/base.html' %}
+
+{% block title %}{{page_name}}{% endblock title %}
+
+{% block content %}
+<div class="container-fluid p-4">
+    <p class="text-black fs-2 fw-bold text-shadow mbt-4 text-center border rounded-5 shadow-sm">{{page_name}}</p>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-5 g-3">
+        {% for field in products %}
+        <div class="col">
+            <div class="card my-3 shadow">
+                <a href="/product_view={{field.id}}/"><img src="{{field.thumbnail.url}}" class="card-img-top"
+                        alt="{{field.product_name}}" height="200px" /></a>
+                <div class="card-body">
+                    <h5 class="card-title text-black fs-6 mb-3">{{field.product_name | slice:":39"}}</h5>
+                    <p class="card-text text-center">
+                        <span class="fs-6 text-decoration-line-through">M.R.P.: {{field.mrp}}</span><br><span
+                            class="fw-bold text-danger">Price: {{field.selling_price}}</span>
+                    </p>
+                    <!-- <a href="#!" class="btn btn-primary">Button</a> -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock content %}

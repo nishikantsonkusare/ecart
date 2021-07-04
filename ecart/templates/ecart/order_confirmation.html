@@ -1,0 +1,37 @@
+{% extends 'ecart/base.html' %}
+
+{% block title %}Order Confirmation{% endblock title %}
+
+{% block content %}
+
+    <div class="container">
+        
+        <div class="row p-4 shadow mt-4">
+            <p class="text-black fs-3 fw-bold text-center pb-4 border-bottom">Order Confirmation</p>
+            <div class="d-flex justify-content-center">                
+                <i class="far fa-thumbs-up bg-success rounded-circle text-white p-4"></i>
+            </div>
+            <p class="text-black fs-5 fw-bold text-center">Thank You</p>
+            <p class="text-black fw-bold text-center">Your order is successfully received at our side.</p>
+            <div class="row">
+                <div class="text-center">
+                    <a href="/" class="btn btn-warning">Continue Shopping</a>
+                    <a href="/my_order/" class="btn btn-warning">Check Order</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock content %}
+
+{% block custom_script %}
+    <script>
+
+        $(document).ready(function(){
+            $('.fa-thumbs-up').animate({ fontSize: '4rem' }, 1000, 'linear');
+        });
+
+
+    </script>
+{% endblock custom_script %}

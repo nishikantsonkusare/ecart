@@ -1,0 +1,189 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {% block title %}{% endblock title %} </title>
+
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
+    <!-- MDB CSS -->
+    <link rel="stylesheet" href="{% static 'css/mdb.min.css' %} ">
+
+    <!-- Data Table CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css">
+
+    <!-- E-cart CSS File -->
+    <link rel="stylesheet" href="{% static 'css/ecart_admin.css' %}">
+
+    <!-- Google Font -->
+    <!-- Roboto -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <!-- Suez One -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Suez+One&display=swap" rel="stylesheet">
+
+    {% block custom_css %}{% endblock custom_css %}
+
+    <!-- Chart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"
+    integrity="sha512-VCHVc5miKoln972iJPvkQrUYYq7XpxXzvqNfiul1H4aZDwGBGC0lq373KNleaB2LpnC2a/iNfE5zoRYmB4TRDQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <style>
+        .no-padding {
+            padding: 0 !important;
+        }
+    </style>
+
+</head>
+
+<body class="bg-admin">
+
+    <header>
+        <!-- Navigation Bar -->
+
+        <!-- Navbar -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <!-- Container wrapper -->
+            <div class="container-fluid">
+                <i class="fas fa-bars fs-5 fw-bold pointer text-black ms-2 d-block d-lg-none d-xl-none d-xxl-none"></i>
+                <a href="/admin/dashboard/" class="navbar-brand ms-5 fs-3 fw-bold text-black no-padding"
+                    style="font-family: 'Suez One', serif; text-shadow: 0px 3px 3px rgba(0, 0, 0, 0.5);">Admin Panel</a>
+                <!-- Right elements -->
+                <div class="ms-auto me-3 d-flex align-items-center">
+
+                    <!-- Avatar -->
+                    <a class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="profile_icon"
+                        role="button" data-mdb-toggle="dropdown" aria-expanded="false">
+                        <img src="{% static 'img/avatar.png' %}" class="rounded-circle" height="40" alt="Profile"
+                            loading="lazy" />
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profile_icon">
+                        <li>
+                            <a href='/logout/' class="dropdown-item" href="#">Logout</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Right elements -->
+            </div>
+            <!-- Container wrapper -->
+        </nav>
+        <!-- Navbar -->
+    </header>
+
+    <main>
+        <div class="container-fluid">
+            <div class="row">
+
+                <!-- Sidemenu Code -->
+                <div class="col-lg-3 mt-lg-1 border shadow-sm bg-white">
+
+                    <!-- Side Navigation Menu -->
+                    <div class="sidenav">
+                        <div class="sidebar bg-white pb-3" data-mdb-perfect-scrollbar='true'>
+                            <!-- Side Navigations -->
+                            <!-- <p class="text-black-50 text-center pb-2 border-bottom fs-5"> Menu</p> -->
+                            <div class="text-center mb-2 p-3 border-bottom">
+                                <img src="/static/img/avatar.png" class="col-8 rounded-circle shadow" alt="Profile">
+                                <p class="text-black mt-2 fs-4 fw-bold text-shadow">{{request.user.username}}</p>
+                            </div>
+
+                            <!-- Menu Items -->
+
+                            <ul class="list-group">
+                                <a href="/admin/" class="list-group-item list-group-item-action pointer rounded-5 border-0"><i
+                                        class="fas fa-home me-2"></i><span>Home</span></a>
+                                <a href="/admin/banner/" class="list-group-item list-group-item-action pointer rounded-5 border-0"><i
+                                        class="fas fa-images me-2"></i><span>Upload Banner</span></a>
+                                <li class="list-group-item list-group-item-action border-0 rounded-5 pointer"
+                                    id="product-item"><a class="text-decoration-none text-black"><i
+                                            class="fas fa-box me-2"></i><span>Product</span><i
+                                            class="fas fa-sort-down float-end"></i></a>
+                                </li>
+                                <ul id="product-item-menu" style="display: none;">
+                                    <a href="/admin/new_product_list/" class="list-group-item list-group-item-action border-0 rounded-5 pointer"><i
+                                            class="far fa-edit me-2"></i><span>Create Product</span></a>
+                                    <a href='/admin/manage_stock/' class="list-group-item list-group-item-action border-0 rounded-5 pointer"><i
+                                            class="fas fa-boxes me-2"></i><span>Manage Stock</span></a>
+                                    <a href="/admin/manage_product/" class="list-group-item list-group-item-action border-0 rounded-5 pointer"><i
+                                            class="fas fa-clipboard-list me-2"></i><span>Manage Product</span></a>
+                                    <a href="/admin/add_category/" class="list-group-item list-group-item-action border-0 rounded-5 pointer"><i
+                                            class="fas fa-th-list me-2"></i><span>Add Category</span></a>
+                                </ul>
+                                <li class="list-group-item list-group-item-action border-0 rounded-5 pointer"
+                                    id="order-item"><a class="text-decoration-none text-black"><i
+                                            class="fas fa-box-open me-2"></i><span>Orders</span><i
+                                            class="fas fa-sort-down float-end"></i></a>
+                                </li>
+                                <ul id="order-item-menu" style="display: none;">
+                                    <a href="/admin/orders/" class="list-group-item list-group-item-action border-0 rounded-5 pointer"><i
+                                            class="fas fa-truck-loading me-2"></i><span>Orders</span></a>
+                                    <a href="/admin/readytoship/" class="list-group-item list-group-item-action border-0 rounded-5 pointer"><i
+                                        class="fas fa-shipping-fast me-2"></i><span>Ready to Shipped</span></a>
+                                    <a href="/admin/rejected_order/" class="list-group-item list-group-item-action border-0 rounded-5 pointer"><i
+                                            class="fas fa-window-close me-2"></i><span>Rejected Orders</span></a>
+                                    <a href="/admin/all_order/" class="list-group-item list-group-item-action border-0 rounded-5 pointer"><i
+                                        class="fas fa-archive me-2"></i><span>All Orders</span></a>
+                                    <a href="/admin/get_shipping_label/" class="list-group-item list-group-item-action border-0 rounded-5 pointer"><i
+                                        class="fas fa-parachute-box me-2"></i><span>Get Shipping Label</span></a>
+                                </ul>
+                            </ul>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Main Content Code -->
+                <div class="col-lg-9 p-4 mx-auto">
+
+                        <!-- Message -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-dismissible fade show alert-{{message.tags}}" role="alert" data-mdb-color="{{message.tags}}">
+                                <strong class="text-capitalize">{{message.tags}}!</strong> {{ message |safe }}
+                                <button type="button" class="btn-close" data-mdb-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    {% block content %}{% endblock content %}
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+        <!-- JQuery -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
+        <!-- Bootstrap Proper and Bootstrap Min -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+
+        <!-- Data Table -->
+        <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
+    
+        <!-- MDB JS file -->
+        <script src="{% static 'js/mdb.min.js' %}"></script>
+    
+        <!-- Ecart JS File -->
+        <script src="{% static 'js/ecart_admin.js' %}"></script>
+
+</body>
+</html>

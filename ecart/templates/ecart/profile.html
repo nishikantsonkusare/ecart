@@ -1,0 +1,72 @@
+{% extends 'ecart/base.html' %}
+{% load static %}
+
+{% block title %}Profile{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+<form action="/profile/" method="post" enctype="multipart/form-data">
+{% csrf_token %}
+    <div class="row mt-4 g-4">
+        <div class="col-md-4 d-flex align-items-center flex-column p-2 mx-1 rounded border shadow">
+            <img src="{% static 'img/avatar.png' %}" class="col-8" alt="Profile Picture">
+            <div class="col-8 mt-3">
+                {{form2.profile_image}}
+            </div>
+            {{form2.profile_image.errors}}
+        </div>
+        <div class="col-md-7 no-padding h-100 mx-1 shadow">
+            <!-- Profile Information Code -->
+            <div class="bg-light" style="margin-bottom: -1rem !important;">
+                <p class="text-black text-center fs-4 fw-bold py-2 px-3 rounded-top border">Profile Information</p>
+            </div>
+            <div class="p-3 rounded-bottom border" id="pro_info" >
+                    <div class="row g-4 mb-4">
+                        <div class="col-lg-6">
+                            <div class="form-outline">
+                                {{form1.first_name}}
+                                <label class="form-label" for="{{form1.first_name.id_for_label}}">First Name</label>
+                            </div>
+                            {{form1.first_name.errors}}
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-outline">
+                                {{form1.last_name}}
+                                <label class="form-label" for="{{form1.last_name.id_for_label}}">Last Name</label>
+                            </div>
+                            {{form1.last_name.errors}}
+                        </div>
+                    </div>
+                    <div class="row g-4 mb-4">
+                        <div class="col-lg-6">
+                            <div class="form-outline">
+                                {{form2.mobile}}
+                                <label class="form-label" for="{{form2.mobile.id_for_label}}">Mobile No.</label>
+                            </div>
+                            {{form2.mobile.errors}}
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-outline">
+                                {{form1.username}}
+                                <label class="form-label" for="email">Email</label>
+                            </div>
+                        </div>
+                    </div>            
+                    <div class="mb-4">
+                        <div class="form-outline ">
+                            {{form2.address}}
+                            <label class="form-label" for="{{form2.address.id_for_label}}">Address</label>
+                        </div>    
+                        {{form2.address.errors}}
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-success col-6">Update Profile</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

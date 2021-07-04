@@ -1,0 +1,35 @@
+{% extends 'ecart/admin/base.html' %}
+
+{% block title %} Product Stock {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <p class="text-center text-black fs-3 fw-bold py-2 bg-white rounded">Stock Management</p>
+    <table id="stock_data" class="table table-stripe table-light">
+        <thead class="table-dark">
+            <tr class="align-middle">
+                <th class="text-nowrap">Sr. No.</th>
+                <th>Product Name</th>
+                <th class="text-nowrap">Available Stock in Qty.</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="search_data">
+            {% for field in data %}
+            <tr class="align-middle">
+                <form action="/admin/update_stock/{{field.id}}" method="post">
+                    {% csrf_token %}
+                <td>{{forloop.counter}}</td>
+                <td>{{field.product_name}}</td>
+                <td class=""><div class="col-6"><input class="form-control" type="number" name="stock" value="{{field.stock}}" /></div></td>
+                <td><button class="btn btn-primary">Change</button></td>
+                </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock content %}

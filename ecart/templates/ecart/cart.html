@@ -1,0 +1,173 @@
+{% extends 'ecart/base.html' %}
+{% load static %}
+
+{% block title %}Cart{% endblock title %}
+
+{% block content %}
+
+<div class="container">
+
+    <div class="row shadow mt-5 p-3">
+        <p class="text-black text-shadow fs-3 fw-bold border-bottom pb-3">Shopping Cart</p>
+        <form action="/checkout/status=review/" method="post">
+            {% csrf_token %}
+        <div id="cart_data">
+
+        </div>
+        <div class="text-center mt-2">
+            <button class="btn btn-success col-sm-6">Proceed to Checkout</button>
+        </div>
+        </form> 
+    </div>
+
+
+</div>
+{% endblock content %}
+
+{% block custom_script %}
+<script>
+
+    $(document).ready(function () {
+        if(localStorage.getItem('cart') == null)
+        {
+            var cart={};
+        }
+        else{    
+            cart = JSON.parse(localStorage.getItem('cart'));
+        }
+
+        if (Object.keys(cart).length == 0){
+            $('form').remove();
+            var noCart = `<div class="row p-3">
+            <div class="d-flex justify-content-center align-items-center flex-column">
+                <p class="text-danger fs-5 fw-bold">No items in cart.</p>
+                <a href="/" class="btn btn-primary">Continue Shopping</a>
+            </div>
+            </div>`
+            $('.row').append(noCart);
+        }
+
+        else{
+        var total = 0;
+        var counter = 0;
+        for (var item in cart) {
+            var str = `
+            <div class="row border-bottom mb-3 py-2" >
+                <div class="col-sm-3 d-flex justify-content-center align-items-center">
+                    <img src="${cart[item]['product_photo']}" alt="${cart[item]['product_name']}" height="100px">
+                </div>
+                <div class="col-sm-6">
+                    <div class="text-primary fs-6 fw-bold">${cart[item]['product_name']}</div>
+                    <input type="hidden" name="id_${counter += 1}" value="${item}" />
+                    <span class="text-success fw-bold">In Stock</span>
+                    <div class="mt-2" style="width: 5rem;">
+                        <div class="input-group input-group-sm mb-1 col-4">
+                            <input type="hidden" value="${cart[item]['product_stock']}">
+                            <button type="button" class="input-group-text rounded-start"><i class="fas fa-minus" id="${item}"></i></button>
+                            <input type="text" class="form-control" name="qty_${counter}" value="${cart[item]['qty']}"/>
+                            <button type="button" class="input-group-text rounded-end"><i class="fas fa-plus" id="${item}"></i></button>
+                            <input type="hidden" id="pro_st_${item}" value="${cart[item]['product_stock']}">
+                        </div>
+                    </div>
+                    <span class="text-primary delete" id="${item}" style="cursor: pointer;">Delete</span><span class="text-danger ms-3" id="st_error_${item}"></span>
+                </div>
+                <div class="col-sm-3">
+                    <p class="text-black fw-bold text-center">&#x20B9 <span id="price_${item}">${parseFloat(cart[item]['qty'] * cart[item]['product_price']).toFixed(2)}</span></p>
+                </div>
+            </div>           
+            `
+            total = total + parseInt(cart[item]['qty'] * cart[item]['product_price']);
+            $('#cart_data').append(str);
+        }
+        
+        total_str = `
+        <div class="row">
+            <div class="col-7 col-sm-9">
+                <p class="text-black fs-5 fw-bold">Total Amount</p>
+            </div>
+            <div class="col-5 col-sm-3">
+                <p class="text-black fs-5 fw-bold text-center text-nowrap">&#x20B9 <span id="total_amount">${parseFloat(total).toFixed(2)}</span></p>
+            </div>
+        </div>
+        <input type="hidden" name="counter" value="${counter}"/>
+        `
+        $('#cart_data').append(total_str);
+    }
+        
+    });
+
+    $(document).on('click', '.fa-minus, .fa-plus, .delete', function () {
+
+        cart = JSON.parse(localStorage.getItem('cart'));
+
+        if ($(this).attr('class') == 'fas fa-minus') {
+            var value = $(this).parent().next().val();
+            var id = $(this).attr('id');
+            if (value > 1) {
+                $(this).parent().next().val(value - 1);
+                cart[id]['qty'] = cart[id]['qty'] - 1;
+                $('#price_'+id).text(parseFloat(cart[id]['qty'] * cart[id]['product_price']).toFixed(2));
+                totalAmount = 0;
+                for (var item in cart){
+                    totalAmount = totalAmount + (cart[item]['product_price'] * cart[item]['qty']);
+                }
+                $('#total_amount').text(parseFloat(totalAmount).toFixed(2));
+            }
+        }
+
+        if ($(this).attr('class') == 'fas fa-plus') {
+            var value = $(this).parent().prev().val();
+            var id = $(this).attr('id');
+            var stock = $(this).parent().next().attr('value');
+            if (value >= 3) {
+                $('#st_error_' + id).text('Only 3 Qty. Per User');
+            }
+            else {
+                if (value >= stock) {
+                    $('#st_error_' + id).text('Stock Availability: ' + stock);
+                }
+                else {
+                    $(this).parent().prev().val(parseInt(value) + 1);
+                    cart[id]['qty'] = cart[id]['qty'] + 1;
+                    $('#price_'+id).text(parseFloat(cart[id]['qty'] * cart[id]['product_price']).toFixed(2));
+                    totalAmount = 0;
+                    for (var item in cart){
+                        totalAmount = totalAmount + (cart[item]['product_price'] * cart[item]['qty']);
+                    }
+                    $('#total_amount').text(parseFloat(totalAmount).toFixed(2));
+                }
+            }
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        
+        // Delete Item from Cart
+        if ($(this).attr('class') == 'text-primary delete') {
+            var id = this.id.toString()
+            delete cart[id];
+            $('span.badge').text(Object.keys(cart).length);
+            localStorage.setItem('cart', JSON.stringify(cart));  
+            $(this).parent().parent().remove(); 
+            if (Object.keys(cart).length == 0){
+                $('form').remove();
+                var noCart = `<div class="row p-3">
+                <div class="d-flex justify-content-center align-items-center flex-column">
+                    <p class="text-danger fs-5 fw-bold">No items in cart.</p>
+                    <a href="/" class="btn btn-primary">Continue Shopping</a>
+                </div>
+                </div>`
+                $('.row').append(noCart);
+            }
+            else{
+                totalAmount = 0;
+                for (var item in cart){
+                    totalAmount = totalAmount + (cart[item]['product_price'] * cart[item]['qty']);
+                }
+                $('#total_amount').text(parseFloat(totalAmount).toFixed(2));
+            }
+        }
+
+    });
+
+</script>
+{% endblock custom_script %}

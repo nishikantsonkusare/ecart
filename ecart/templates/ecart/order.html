@@ -1,0 +1,52 @@
+{% extends 'ecart/base.html' %}
+
+{% load humanize %}
+
+{% block title %} My Orders {% endblock title %}
+
+{% block content %}
+
+<div class="container p-3">
+    <p class="text-black text-shadow fs-4 fw-bold py-2 mt-2">My Orders</p>
+    {% for order_numbers in order_num %}
+            <div class="row g-2 my-2">
+                <div class="col-12">
+                    <div class="row bg-light border rounded-top py-3">
+                        <div class="col-6 text-center mb-3">
+                            <span class="text-black">Order Date: <span class="text-nowrap">{{order_numbers.order_date}}</span></span>
+                        </div>
+                        <div class="col-6 text-center">
+                            <span class="text-black">Order No.: {{order_numbers.order_number}}</span>
+                        </div>
+                        <div class="col-6 text-center">
+                            <span class="text-black">Courier Name: {{order_numbers.courier_name}}</span>
+                        </div>
+                        <div class="col-6 text-center">
+                            <span class="text-black">Tracking ID: {{order_numbers.tracking_id}}</span>
+                        </div>
+                    </div>
+                    {% for order in orders %}
+                        {% if order_numbers.order_number == order.order_number %}
+                            <div class="row bg-white border py-3">
+                                <div class="col-3 d-flex justify-content-center align-items-center">
+                                    <img src="{{order.img_url}}" class="col-12 col-md-6" alt="{{order.product_name}}">
+                                </div>
+                                <div class="col-9 d-flex align-items-center">
+                                    <a href="/product_view={{order.product_id}}/" class="text-primary text-center fw-bold">{{order.product_name}}</a>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="row bg-light border rounded-bottom pt-3">
+                        <div class="col-6">
+                            <span class="float-start"><a href="/get_invoice/{{order_numbers.order_number}}" target='_blank' class="btn btn-info ms-3">Get Invoice</a></span>
+                        </div>
+                    <div class="col-6">
+                        <p class="text-black text-end fs-5 pe-5"><span class="text-nowrap">Order Amount: </span> <span class="text-nowrap">&#x20B9; {{order_numbers.order_amount|floatformat:2}}</span></p>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    {% endfor %}
+
+{% endblock content %}

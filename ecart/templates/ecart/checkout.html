@@ -1,0 +1,85 @@
+{% extends 'ecart/base.html' %}
+{% load static %}
+{% load mathfilters %}
+
+{% block title %} Checkout {% endblock title %}
+
+{% block content %}
+
+<div class="container mt-4 mb-5">
+    <p class="text-black fs-2 fw-bold text-shadow p-2 text-center my-3 shadow">Checkout</p>
+    <div class="p-3 shadow">
+        <p class="text-black fs-4 fw-bold text-shadow pb-3 border-bottom">Address for Delivery</p>
+            <div class="row px-3 mx-3">
+                <div class="text-black fs-5 fw-bold">{{request.user.first_name}} {{request.user.last_name}}</div>
+                <div class="text-black"> <span class="fw-bold">Address: </span>  {{user.userprofile.address}}</div>
+                <div class="text-black"> <span class="fw-bold">Mob No.: </span>  {{user.userprofile.mobile}}</div>
+            </div>
+    </div>
+    <div class="p-3 shadow mt-3">
+        <p class="text-black fs-4 fw-bold text-shadow pb-3 border-bottom">Product List</p>
+        {% for field in product %}
+        {% for key, value in qty.items %}
+        {% if field.id|slugify == key %}
+        <div class="row">
+            <div class="col-sm-7">
+                <p class="text-black fw-bold">{{field.product_name}}</p>
+            </div>
+            <div class="col-sm-2">
+                <p class="text-black fw-bold text-center">X <span>{{value}}</span></p>
+            </div>
+            <div class="col-sm-3">
+                <p class="text-black fw-bold text-center">&#x20B9; <span class="price">{{field.selling_price | mul:value}}</span></p>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        <div class="row border-top pt-3">
+            <div class="col-sm-9">
+                <p class="text-black fs-4 fw-bold text-center">Final Amount</p>
+            </div>
+            <p class="col-sm-3 text-black fs-4 fw-bold text-center">&#x20B9; <span id="grand_total"></span></p>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <button type="submit" id="rzp-pay" class="btn btn-success fs-6 fw-bold my-4 py-2 col-sm-4">Place Order</button>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+        <script>
+            var options = {
+                "key": "{{api_key}}", // Enter the Key ID generated from the Dashboard
+                "currency": "INR",
+                "name": "Chhavi Infotech",
+                "description": "Test Transaction",
+                "order_id": "{{order_id}}", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                "callback_url": "http://127.0.0.1:8000/order_confirmation/",
+                "prefill": {
+                    "name": "Gaurav Kumar",
+                    "email": "gaurav.kumar@example.com",
+                    "contact": "9999999999"
+                },
+                "notes": {
+                    "address": "Razorpay Corporate Office"
+                },
+                "theme": {
+                    "color": "#3399cc"
+                }
+            };
+            var rzp1 = new Razorpay(options);
+            document.getElementById('rzp-pay').onclick = function (e) {
+                localStorage.clear()
+                rzp1.open();
+                e.preventDefault();
+            }
+        </script>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block custom_script %}
+
+<script src="{% static 'js/checkout.js' %}"></script>
+
+{% endblock custom_script %}

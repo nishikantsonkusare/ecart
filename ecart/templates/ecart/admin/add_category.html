@@ -1,0 +1,56 @@
+{% extends 'ecart/admin/base.html' %}
+{% load static %}
+
+{% block title %}Add Category{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <form action="/admin/add_category/" method="post" class="bg-white p-3 mb-4">
+        {% csrf_token %}
+        <p class="text-black text-center fs-4 fw-bold text-shadow pb-3 border-bottom">Add Category</p>
+        <div class="row g-3 mb-4">
+            <div class="col-sm-2 ms-auto d-flex align-items-center">
+                <label for="category" class="fs-6 fw-bold">Category</label>
+            </div>
+            <div class="col-sm-5 me-auto">
+                <input type="text" name="category" id="category" class="form-control" autocomplete="off" required>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </form>
+
+    <form action="/admin/add_subcategory/" method="post" class="bg-white p-3">
+        {% csrf_token %}
+        <p class="text-black text-center fs-4 fw-bold text-shadow pb-3 border-bottom">Add Category</p>
+        <div class="row g-3 mb-4">
+            <div class="col-sm-2 ms-auto d-flex align-items-center">
+                <label for="cateory" class="fs-6 fw-bold">Select Category</label>
+            </div>
+            <div class="col-sm-5 me-auto">
+                
+                <select class="form-select" name="category" required>
+                    <option value="" selected>Open this select menu</option>
+                    {% for field in data %}
+                        <option class="py-3" value="{{field.id}}">{{field.name}}</option>
+                    {% endfor %}
+                  </select>
+            </div>
+        </div>
+        <div class="row g-3 mb-4">
+            <div class="col-sm-2 ms-auto d-flex align-items-center">
+                <label for="subcat" class="fs-6 fw-bold">Sub-Category</label>
+            </div>
+            <div class="col-sm-5 me-auto">
+                <input type="text" name="subcat" id="subcat" class="form-control" autocomplete="off" required>
+            </div>
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success">Submit</button>
+        </div>
+    </form>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,36 @@
+{% extends 'ecart/admin/base.html' %}
+
+{% block title %} Ready To Shipped {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <p class="text-center text-black fs-3 fw-bold py-2 bg-white rounded">All Orders</p>
+    <table class="table table-stripe table-light" style="width: 100%;">
+        <thead class="table-dark text-center fw-bold">
+            <tr class="align-middle">
+                <th class="text-nowrap">Sr. No.</th>
+                <th>Order No.</th>
+                <th class="text-nowrap">Order Date</th>
+                <th>Order Amount</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="sort_data" class='text-center'>
+            {% for field in data %}
+            <tr class="align-middle">
+                <td>{{forloop.counter}}</td>
+                <td>{{field.order_number}}</td>
+                <td>{{field.order_date}}</td>
+                <td>{{field.order_amount}}.00</td>
+                <td class="text-center">
+                    <a href="/admin/get_label/{{field.order_number}}" target="_blank" class="btn btn-success">Get Label</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock content %}

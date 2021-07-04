@@ -1,0 +1,43 @@
+{% extends 'ecart/admin/base.html' %}
+{% block title %} Upload Banner {% endblock title %}
+{% block content %}
+
+<div class="container">
+    <p class="text-black text-center text-shadow fs-3 fw-bold py-1 bg-white border rounded shadow">UPLOAD BANNER</p>
+    <form action="/admin/banner/" class="bg-white p-2 border rounded shadow mb-3" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-sm-6">
+                    {{form.image}}
+                    {{form.image.errors}}
+            </div>
+            <div class="col-sm-6">
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success col-sm-8">Upload</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <table class="table table-light table-strip">
+        <thead class="table-dark">
+            <tr>
+                <th class="text-nowrap">Sr. No.</th>
+                <th class="text-center">Image</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody class="align-middle">
+            {% for field in data %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td class="text-center"><img src="{{field.image.url}}" class="col-5" alt="Banner{{forloop.counter}}"></td>
+                <td> <a href="/admin/banner/delete/id={{field.id}}/" class="btn btn-danger">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock content %}

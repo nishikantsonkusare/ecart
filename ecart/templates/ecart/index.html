@@ -1,0 +1,92 @@
+{% extends 'ecart/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<div class="container-fluid no-padding">
+
+    <!-- Carousal -->
+    <div class="container-fluid no-padding my-1 shadow border">
+
+        <div id="carouselExampleControls" class="carousel slide" data-mdb-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="{{banner.0.image.url}}" class="d-block w-100" alt="Banner1" style="height: 20rem;" />
+                </div>
+                {% for image in banner|slice:"1:" %}
+                <div class="carousel-item">
+                    <img src="{{image.image.url}}" class="d-block w-100" alt="Banner{{forloop.counter}}" style="height: 20rem;" />
+                </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-mdb-target="#carouselExampleControls"
+                data-mdb-slide="prev">
+                <div class="text-dark bg-light py-3 px-2 rounded">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                </div>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-mdb-target="#carouselExampleControls"
+                data-mdb-slide="next">
+                <div class="text-dark bg-light py-3 px-2 rounded">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                </div>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+    </div>
+
+    <!-- Main content -->
+    <main>
+        <div class="container-fluid pb-5">
+            <div class="text-center fs-1 fw-bold text-black my-3"
+                style="font-family: 'Suez One', serif; text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.5);">Feature
+                Products</div>
+
+            <div class="container">
+                <div class="row">
+                    <div id='feature_product' class="owl-carousel">
+                        {% for field in data %}
+                        <div class="card my-3 shadow-sm">
+                            <a href="/product_view={{field.id}}/"><img src="{{field.thumbnail.url}}" class="card-img-top" alt="{{field.product_name}}" height="200px" /></a>
+                            <div class="card-body">
+                                <h5 class="card-title text-black fs-6 mb-3">{{field.product_name | slice:":39"}}</h5>
+                                <p class="card-text text-center">
+                                    <span class="fs-6 text-decoration-line-through">M.R.P.: {{field.mrp}}</span><br><span class="fw-bold text-danger">Price: {{field.selling_price}}</span>
+                                </p>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>           
+        </div>
+        
+        <div class="container">
+        {% for products in allprod %}
+            <div class="row">
+                <p class="text-center text-black text-shadow fs-2 fw-bold">{{products.0.category_name}}</p>
+                <div class="owl-carousel category_wise">
+                    {% for field in products %}
+                    <div class="card my-3 shadow-sm">
+                        <a href="/product_view={{field.id}}/"><img src="{{field.thumbnail.url}}" class="card-img-top" alt="{{field.product_name}}" height="200px" /></a>
+                        <div class="card-body">
+                            <h5 class="card-title text-black fs-6 mb-3">{{field.product_name | slice:":39"}}</h5>
+                            <p class="card-text text-center">
+                                <span class="fs-6 text-decoration-line-through">M.R.P.: {{field.mrp}}</span><br><span class="fw-bold text-danger">Price: {{field.selling_price}}</span>
+                            </p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </main>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,111 @@
+{% extends 'ecart/admin/base.html' %}
+{% load static %}
+
+{% block title %}New Product List{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="row bg-white shadow border p-2">
+
+        <p class="text-center text-black text-shadow fs-4 fw-bold pb-2 border-bottom">New Product Listing</p>
+
+        <form action="/admin/new_product_list/" method="post" class="p-3" enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <div class="mb-4">
+                <div class="form-outline">
+                    {{form.product_name}}
+                    <label class="form-label" for="{{form.product_name.id_for_label}}">Product Name</label>
+                </div>
+                {{form.product_name.errors}}
+            </div>
+            <div class="mb-4">
+                <div class="form-outline">
+                    <label class="form-label" for="{{form.product_description.id_for_label}}">Product Description</label>
+                    <div class="text-center">
+                        {{form.media}}
+                        {{form.product_description}}
+                    </div>
+                </div>
+                {{form.product_description.errors}}
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="col-sm-4">
+                    <div class="form-outline input-group">
+                        <span class="input-group-text fw-bold" id="basic-addon1">&#x20B9</span>
+                        {{form.mrp}}
+                        <label class="form-label" for="{{form.mrp.id_for_label}}">MRP</label>
+                    </div>  
+                    {{form.mrp.errors}}
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-outline input-group">
+                        <span class="input-group-text fw-bold" id="basic-addon1">&#x20B9</span>
+                        {{form.selling_price}}
+                        <label class="form-label" for="{{form.selling_price.id_for_label}}">Selling Price</label>
+                    </div>  
+                    {{form.selling_price.errors}}
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-outline input-group">
+                        <span class="input-group-text fw-bold" id="basic-addon1"><i class="fas fa-box"></i></span>
+                        {{form.stock}}
+                        <label class="form-label" for="{{form.stock.id_for_label}}">Stock Qty.</label>
+                    </div>  
+                    {{form.stock.errors}}
+                </div>
+            </div>   
+            
+            <div class="row g-3 mb-3">
+                <div class="col-sm-6">
+                    <label class="form-label" for="{{form.category_name.id_for_label}}">Category</label>
+                    {{form.category_name}}
+                    {{form.category_name.errors}}
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="{{form.sub_category.id_for_label}}">Sub Category</label>
+                    {{form.sub_category}}
+                    {{form.sub_category.errors}}
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-sm-6">
+                    <label class="form-label" for="{{form.thumbnail.id_for_label}}">Product Thumbnail</label>
+                    {{ form.thumbnail}}
+                    {{ form.thumbnail.errors}}
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="{{form.img1.id_for_label}}">Product Image</label>
+                    {{ form.img1}}
+                    {{ form.img1.errors}}
+                </div>
+            </div>
+
+            <div class="row g-3 mb-3">
+                <div class="col-sm-6">
+                    <label class="form-label" for="{{form.img2.id_for_label}}">Product Image</label>
+                    {{ form.img2}}
+                    {{ form.img2.errors}}
+                </div>
+                <div class="col-sm-6">
+                    <label class="form-label" for="{{form.img3.id_for_label}}">Product Image</label>
+                    {{ form.img3}}
+                    {{ form.img3.errors}}
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button class="btn btn-success col-sm-6 my-2">Submit</button>
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock content %}

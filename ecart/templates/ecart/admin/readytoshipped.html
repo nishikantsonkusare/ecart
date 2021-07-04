@@ -1,0 +1,42 @@
+{% extends 'ecart/admin/base.html' %}
+
+{% block title %} Ready To Shipped {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <p class="text-center text-black fs-3 fw-bold py-2 bg-white rounded">Ready To Shipped</p>
+    <input type="text" id="search" placeholder="Search by Order Number/ Order Date" class="form-control mb-3" autocomplete="off" />
+    <table class="table table-stripe table-light" style="width: 100%;">
+        <thead class="table-dark text-center fw-bold">
+            <tr class="align-middle">
+                <th class="text-nowrap">Sr. No.</th>
+                <th>Order No.</th>
+                <th>Order Date</th>
+                <th>Courier Name</th>
+                <th>Tracking ID</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody id="sort_data">
+            {% for field in data %}
+            <form action="/admin/update_courier/{{field.order_number}}/" method="post">
+                {% csrf_token %}
+            <tr class="align-middle">
+                <td>{{forloop.counter}}</td>
+                <td>{{field.order_number}}</td>
+                <td>{{field.order_date}}</td>
+                <td> <input type="text" name="courier_name" class="form-control" placeholder="Courier Name" autocomplete="off" required /></td>
+                <td> <input type="text" name="tracking_id" class="form-control" placeholder="Tracking ID" autocomplete="off" required /> </td>
+                <td class="text-center">
+                    <button type="submit" class="btn btn-success"> Update </button>
+                </td>
+            </tr>
+            </form>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock content %}

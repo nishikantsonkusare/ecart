@@ -1,0 +1,109 @@
+{% load mathfilters %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shipping Label</title>
+    <link rel="stylesheet" href="/static/css/shipping_slip.css">
+
+    <style>
+        @page {
+            size: A4 portrait;
+            margin: 1cm;
+        }
+
+        .title{
+            width: 100%;
+            padding: 0.8rem 0 0 0;
+            font-size: 2rem;
+            font-weight: 600;
+            color: white;
+            background-color: gray;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <div class="container">
+        <div class="title">Packing Slip</div>
+
+        <table style="margin: 1rem 0; font-size: 1.5rem;">
+            <tbody>
+                <tr>
+                    <td style="width: 15%;"><b>Seller Name: </b></td>
+                    <td>{{seller_name}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 15%;"><b>Address: </b></td>
+                    <td>{{seller_address}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 15%;"><b>GST No.: </b></td>
+                    <td>{{gst_no}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table style="margin: 1rem 0;">
+            <tbody style="font-size: 1.5rem;">
+                <tr>
+                    <td style="width: 10%; margin: 1rem 0;"><b>Date: </b></td>
+                    <td>{{date}}</td>
+                    <td style="width: 15%; margin: 1rem 0;"><b>Tracking ID: </b></td>
+                    <td>#{{tracking_id}}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table style="margin: 1rem 0;">
+            <tbody>
+                <tr style="font-size: 1.5rem;">
+                    <td style="width: 10%; vertical-align: top;"><b>Ship To: </b></td>
+                    <td>{{name}} <br> {{address}}<br><b>Mobile No.: </b>{{mobile}}</td>
+                    <td style="width: 10%; vertical-align: top;"><b>Bill To: </b></td>
+                    <td>{{name}} <br> {{address}}<br><b>Mobile No.: </b>{{mobile}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="margin: 1rem 0;">
+            <tbody style="font-size: 1.5rem;">
+                <tr>
+                    <td style="width: 10%; vertical-align: top;"><b>Email: </b></td>
+                    <td>{{email}}</td>
+                    <td style="width: 11%; vertical-align: top;"><b>Order No.: </b></td>
+                    <td>#{{order_number}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <table style="width: 100%; margin: 1rem 0; font-size: 1.5rem; border-collapse: collapse;">
+            <thead>
+                <tr style="background-color: gray; border: 1px solid black; color: white; font-weight: 700; padding-top: 0.3rem; text-align: center;">
+                    <td>Qty.</td>
+                    <td>Item Description</td>
+                    <td>Price</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for field in data %}
+                <tr style="padding: 0.4rem 0.2rem 0 0.3rem; border: 1px solid black;">
+                    <td style="width: 10%; text-align: center;">{{field.qty}}</td>
+                    <td >{{field.product_name}}</td>
+                    <td style="width: 15%;  text-align: center;">{{field.price|mul:field.qty}}.00</td>
+                </tr>
+                {% endfor %}
+                <tr style="padding: 0.4rem 0.2rem 0 0.3rem; border: 1px solid black;">
+                    <td style="width: 10%;"></td>
+                    <td style="text-align: center; font-size: 1.1rem; font-weight: 600;">Total Amount</td>
+                    <td style="text-align: center; font-weight: 600;">{{order_amount}}.00</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="text-align: center; font-size: 2rem; font-weight: 600;">----- Thank You for Shopping with E-Cart! ------</p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+{% extends 'ecart/admin/base.html' %}
+
+{% block title %} Orders {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <p class="text-center text-black fs-3 fw-bold py-2 bg-white rounded">Orders</p>
+    <table id="stock_data" class="table table-stripe table-light" style="width: 100%;">
+        <thead class="table-dark text-center fw-bold">
+            <tr class="align-middle">
+                <th class="text-nowrap">Sr. No.</th>
+                <th>Order No.</th>
+                <th>Order Date</th>
+                <th class="text-nowrap">Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for field in data %}
+            <tr class="align-middle">
+                <td>{{forloop.counter}}</td>
+                <td>{{field.order_number}}</td>
+                <td>{{field.order_date}}</td>
+                <td>{{field.order_amount}}.00</td>
+                <td class="text-center"> {% if field.order_status == 'pending' %}
+                    <button type="button" class="btn btn-primary" data-mdb-toggle="modal" data-mdb-target="#{{field.order_number}}"> {{field.order_status}} </button>
+                    {% endif %}
+                </td>
+
+                <!-- Order Confirmation Model -->
+
+                <!-- Modal -->
+                    <div class="modal fade" id="{{field.order_number}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Order Confirmation</h5>
+                            <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body py-4">Do you want to confirm order no. <b>{{field.order_number}}</b></div>
+                            <div class="modal-footer">
+                            <a href="/admin/order_confirm/{{field.order_number}}/" type="button" class="btn btn-success">Confirm Order</a>
+                            <a href="/admin/order_reject/{{field.order_number}}/" type="button" class="btn btn-danger">Reject Order</a>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+{% endblock content %}

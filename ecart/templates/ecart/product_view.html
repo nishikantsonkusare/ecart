@@ -1,0 +1,133 @@
+{% extends 'ecart/base.html' %}
+{% load static %}
+{% load mathfilters %}
+
+{% block title %}{{product.product_name}}{% endblock title %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- product view -->
+
+    <div class="row mt-3">
+
+        <div class="col-lg-5">
+                <div class="d-flex align-items-center" id="product_photo">
+                    <input type="hidden" id="pro_photo" value="{{product.thumbnail.url}}">
+                    <img src="{{product.thumbnail.url}}" class="d-flex justify-content-center col-10 mx-auto p-3 pointer product_photo"
+                id="photo_view" alt="{{product.product_name}}">
+                </div>
+            <div class="container">
+                <div class="row g-2 d-flex align-items-center">
+                    <div class="col-3">
+                        <div class="border text-center rounded pointer d-flex align-items-center">
+                            <img src="{{product.thumbnail.url}}" class="col-10" id="img1">
+                        </div>
+                    </div>
+                    {% if product.img1 %}
+                        <div class="col-3">
+                            <div class="border text-center rounded pointer d-flex align-items-center">
+                                <img src="{{product.img1.url}}" class="col-10" id="img1">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if product.img2 %}
+                        <div class="col-3">
+                            <div class="border text-center rounded pointer d-flex align-items-center">
+                                <img src="{{product.img2.url}}" class="col-10" id="img1">
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if product.img3 %}
+                        <div class="col-3">
+                            <div class="border text-center rounded pointer d-flex align-items-center">
+                                <img src="{{product.img3.url}}" class="col-10" id="img1">
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-7">
+            <div class="container-fluid mt-5">
+                <p class="text-black fs-3 fw-bold" id="pro_name">{{product.product_name}}</p>
+                {% if product.stock == 0 %}
+                    <div class="text-danger ms-3">Out of Stock </div>
+                {% else %}
+                    <input type="hidden" id="pro_stock" value="{{product.stock}}">
+                    <div class="text-success ms-3">In Stock </div>
+                {% endif %}
+                <div class="row">
+                    <div class="col-5 col-lg-3">
+                        <div class="fs-5 text-black-50 fw-bold float-end">M.R.P.: </div>
+                    </div>
+                    <div class="col-5 col-lg-9">
+                        <div class="text-decoration-line-through fs-5 text-black-50 fw-bold float-start text-nowrap">
+                            &#x20B9 {{product.mrp}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-5 col-lg-3">
+                        <div class="fs-5 text-danger fw-bold float-end">Offer Price: </div>
+                    </div>
+                    <div class="col-7 col-lg-9">
+                        <div class="fs-5 text-danger fw-bold float-start">
+                            &#x20B9 <span id="price">{{product.selling_price}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-5 col-lg-3">
+                        <div class="fs-5 text-black-50 fw-bold float-end">You Save: </div>
+                    </div>
+                    <div class="col-7 col-lg-9">
+                        <div class="fs-5 text-warning fw-bold float-start">
+                            &#x20B9 {{product.mrp | sub:product.selling_price}}
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-3">
+                    <!-- <div class="col-lg-6"> -->
+                    <!-- <div class="text-center"> -->
+                    <button class="btn btn-warning me-2 col-lg-3 fw-bold cart" id="{{product.id}}">Add To Cart</button>
+                    <a href="/cart/" class="btn btn-success col-lg-3 fw-bold cart" id="{{product.id}}">Buy Now</a>
+                    <!-- </div> -->
+                    <!-- </div> -->
+                </div>
+                <div class="row mt-3">
+                    <div class="text-black fs-3 fw-bold">Product Description</div>
+                    <p>{{product.product_description | safe }}</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <hr>
+
+    <div class="container">
+        <div class="row">
+            <p class="text-black text-shadow text-center fs-3 fw-bold">
+                Recently Added {{product.sub_category}}
+            </p>
+            <div id='recent_product' class="owl-carousel">
+                {% for field in product_data %}
+                <div class="card my-3 shadow-sm">
+                    <a href="/product_view={{field.id}}/"><img src="{{field.thumbnail.url}}" class="card-img-top" alt="{{field.product_name}}" height="200px" /></a>
+                    <div class="card-body">
+                        <h5 class="card-title text-black fs-6 mb-3">{{field.product_name | slice:":39"}}</h5>
+                        <p class="card-text text-center">
+                            <span class="fs-6 text-decoration-line-through">M.R.P.: {{field.mrp}}</span><br><span class="fw-bold text-danger">Price: {{field.selling_price}}</span>
+                        </p>
+                        <!-- <a href="#!" class="btn btn-primary">Button</a> -->
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{% endblock content %}

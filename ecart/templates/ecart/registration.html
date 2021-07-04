@@ -1,0 +1,51 @@
+{% extends 'ecart/base.html' %}
+
+{% block title %}E-cart Registration{% endblock title %}
+
+{% block content %}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-sm-7 col-lg-4 mx-auto border rounded-1 shadow-sm">
+            <form action="/registration/" method="post" class="p-3">
+                {% csrf_token %}
+                <p class="text-black fs-4 fw-bold mb-4">Create Account</p>
+                <div class="mb-4">
+                    <div class="form-outline">
+                        {{form.first_name}}
+                        <label class="form-label" for="{{form.first_name.id_for_label}}">First Name</label>
+                    </div>
+                    {{form.first_name.errors}}
+                </div>
+                <div class="mb-4">
+                    <div class="form-outline">
+                        {{form.last_name}}
+                        <label class="form-label" for="{{form.last_name.id_for_label}}">Last Name</label>
+                    </div>
+                    {{form.last_name.errors}}
+                </div>
+                <div class="mb-4">
+                    <div class="form-outline">
+                        {{form.username}}
+                        <label class="form-label" for="{{form.username.id_for_label}}">Email</label>
+                    </div>
+                    {{form.username.errors}}
+                </div>
+                <div class="mb-4">
+                    <div class="form-outline">
+                        {{form.password}}
+                        <label class="form-label" for="{{form.password.id_for_label}}">Password</label>            
+                    </div>
+                    {{form.password.errors}}
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-warning fw-bold mb-3 col-12">Create Account</button>
+                </div>
+                <hr>
+                <p class="text-black">Already have an Account? <a href="/login/" class="text-primary">Sign-In</a></p>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

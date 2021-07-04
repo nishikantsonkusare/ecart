@@ -1,0 +1,71 @@
+html, body{
+    min-height: 100% !important;
+}
+
+.errorlist{
+    list-style: none;
+    color: #F93404;
+    margin-top: 5px;
+    padding: 0 0 0 5px;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.text-shadow{
+    text-shadow: 0px 4px 3px rgba(0, 0, 0, 0.5);
+}
+
+.show{
+    display: block;
+}
+
+.hide{
+    display: none;
+}
+
+.bg-admin{
+    background: #d9a7c7;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #fffcdc, #d9a7c7);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #fffcdc, #d9a7c7); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+}
+
+.hover-item:hover{
+    background: #4B49AC;
+    color: white;
+}
+
+.list-group a{
+    margin: 3px 0;
+}
+
+@media screen and (max-width: 992px) {
+
+    .sidenav{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh !important;
+        background-color: rgba(0, 0, 0, 0.3);
+        z-index: 5000;
+        display: none;
+        overflow-y: auto;
+    }
+
+    .sidenav .sidebar{
+        width: 300px;
+        height: 100vh !important;
+        overflow-y: auto;
+    }
+
+    .show{
+        display: block;
+    }    
+
+    .overflow-hide{
+        overflow-y: hidden;
+    }
+}

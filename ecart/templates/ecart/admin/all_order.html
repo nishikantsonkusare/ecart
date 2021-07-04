@@ -1,0 +1,61 @@
+{% extends 'ecart/admin/base.html' %}
+
+{% block title %} Ready To Shipped {% endblock title %}
+
+{% block content %}
+
+<div class="container">
+    <p class="text-center text-black fs-3 fw-bold py-2 bg-white rounded">All Orders</p>
+    <form action="/admin/all_order/" method="post" class="mb-3 text-center">
+    {% csrf_token %}
+        <div class="row g-3 d-flex justify-content-center">
+            <div class="col-sm-5">
+                <select class="form-select" name="search_by" aria-label="Default select example">
+                    <option selected>Select Order Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="received">Received</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+            </div>
+            <button class="btn btn-success col-6 col-sm-4">Submit</button>
+        </div>
+    </form>
+    <div style="overflow-x:auto;">
+    <table class="table table-stripe table-light" style="width: 100%;">
+        <thead class="table-dark text-center fw-bold">
+            <tr class="align-middle">
+                <th class="text-nowrap">Sr. No.</th>
+                <th>Order No.</th>
+                <th class="text-nowrap">Order Date</th>
+                <th>Order Amount</th>
+                <th>Order Status</th>
+            </tr>
+        </thead>
+        <tbody id="sort_data">
+            {% for field in data %}
+            <tr class="align-middle">
+                <td>{{forloop.counter}}</td>
+                <td>{{field.order_number}}</td>
+                <td>{{field.order_date}}</td>
+                <td>{{field.order_amount}}</td>
+                <td class="text-center">
+                    {% if field.order_status == 'pending' %}
+                        <button class="btn btn-warning">{{field.order_status}}</button>
+                    {% elif field.order_status == 'received' %}
+                        <button class="btn btn-info">{{field.order_status}}</button>
+                    {% elif field.order_status == 'shipped' %}
+                        <button class="btn btn-success">{{field.order_status}}</button>
+                        {% elif field.order_status == 'rejected' %}
+                        <button class="btn btn-danger">{{field.order_status}}</button>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+</div>
+
+{% endblock content %}
