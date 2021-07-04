@@ -30,7 +30,7 @@ body {
 
 .container .main-content {
   width: 30%;
-  height: 40%;
+  height: auto;
   background: #312f2f;
   -webkit-box-shadow: 0 0 50px 2px gray;
           box-shadow: 0 0 50px 2px gray;
