@@ -26,7 +26,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['ecart-online.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['ecart-online.herokuapp.com']
 
 
 # Application definition
@@ -79,17 +79,27 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'ddq5hevkjtotag',
+#         'USER': 'inkyxcvfvvvswf',
+#         'PASSWORD': '7f6ef7199fbb7e8ee38a0da47d9b1b27732e8e6d50ba62ad94b682642fc8dad3',
+#         'HOST': 'ec2-52-6-77-239.compute-1.amazonaws.com',
+#         'PORT': 5432,
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ddq5hevkjtotag',
-        'USER': 'inkyxcvfvvvswf',
-        'PASSWORD': '7f6ef7199fbb7e8ee38a0da47d9b1b27732e8e6d50ba62ad94b682642fc8dad3',
-        'HOST': 'ec2-52-6-77-239.compute-1.amazonaws.com',
+        'NAME': 'ecart',
+        'USER': 'postgres',
+        'PASSWORD': '123',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

@@ -46,10 +46,14 @@ class UserProfile(models.Model):
         return self.user.username
 
 class Order(models.Model):
-    user = models.CharField(max_length=256, null=False, blank=False, default='')
+    user = models.CharField(max_length=256, null=False, blank=False)
+    name = models.CharField(max_length=256, null=False, blank=False)
+    address = models.CharField(max_length=256, null=False, blank=False)
+    mobile = models.CharField(max_length=10, null=False, blank=False)
     product_id = models.CharField(max_length=256, null=False, blank=False)
     product_name = models.CharField(max_length=256, null=False, blank=False)
     price = models.IntegerField(default=0)
+    img_url = models.CharField(max_length=500, blank=True)
     qty = models.IntegerField()
     order_date = models.DateField(default=timezone.now)
     order_amount = models.PositiveIntegerField(null=True)
@@ -57,13 +61,8 @@ class Order(models.Model):
     transaction_id = models.CharField(max_length=256, null=False, blank=True)
     payment_signature = models.CharField(max_length=256, null=False, blank=True)
     order_status = models.CharField(max_length=50, null=False, blank=True)
-    name = models.CharField(max_length=256, null=False, blank=False, default='')
-    address = models.CharField(max_length=256, null=False, blank=False, default='')
-    mobile = models.CharField(max_length=10, null=False, blank=False, default='')
-    courier_name = models.CharField(max_length=100, null=True, blank=True, default='')
-    tracking_id = models.CharField(max_length=100, null=True, blank=True, default='')
-    user = models.CharField(max_length=256, null=False, blank=False, default='')
-    img_url = models.CharField(max_length=500, null=False, blank=False, default='')
+    courier_name = models.CharField(max_length=100, null=False, blank=True)
+    tracking_id = models.CharField(max_length=100, null=False, blank=True)
 
 class Banner(models.Model):
     image = models.ImageField(upload_to='banner/', null=True, blank=False)
