@@ -163,7 +163,24 @@ def update_product(request, id):
             if request.method == 'POST':
                 form = UpdateProductForm(request.POST, request.FILES)
                 if form.is_valid():
-                    form.save()
+                    form.save(commit=False)
+                    product = Product.objects.get(id=id)
+                    product.product_name = form.cleaned_data['product_name']
+                    product.product_description = form.cleaned_data['product_description']
+                    product.mrp = form.cleaned_data['mrp']
+                    product.selling_price = form.cleaned_data['selling_price']
+                    product.stock = form.cleaned_data['stock']
+                    product.category_name = form.cleaned_data['category_name']
+                    product.sub_category = form.cleaned_data['sub_category']
+                    if form.cleaned_data['thumbnail'] != None:
+                        product.thumbnail = form.cleaned_data['thumbnail']
+                    if form.cleaned_data['img1'] != None:
+                        product.img1 = form.cleaned_data['img1']
+                    if form.cleaned_data['img2'] != None:
+                        product.img2 = form.cleaned_data['img2']
+                    if form.cleaned_data['img3'] != None:
+                        product.img3 = form.cleaned_data['img3']
+                    product.save()
                     messages.success(request, 'Product details successfully updated.')
                     return redirect('/admin/manage_product/')
                 else:

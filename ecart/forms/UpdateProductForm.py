@@ -50,8 +50,6 @@ class UpdateProductForm(forms.ModelForm):
         img1 = self.cleaned_data.get('img1')
         img2 = self.cleaned_data.get('img2')
         img3 = self.cleaned_data.get('img3')
-
-        print(thumbnail)
     
         if len(product_name) <= 10:
             self.add_error('product_name', 'Product name must be greater than 10 charachter.')
