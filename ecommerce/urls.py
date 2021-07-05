@@ -19,9 +19,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 from ecart.views import admin_views, views
 from django.views.static import serve
+from django.conf.urls import url
 
 urlpatterns = [
+    url(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT}),
     path('', include('ecart.urls.urls')),
     path('admin/', include('ecart.urls.admin_urls')),
-    re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    # re_path(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+] 
+# + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
