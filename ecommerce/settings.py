@@ -25,9 +25,9 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECRET_KEY = 'django-insecure-i1xr%h1ymjoc#p%3$f^l4$xtw%#1xhdv3u_lv)xf6u6&zbs37e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['ecart-online.herokuapp.com']
+ALLOWED_HOSTS = ['ecart-online.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
@@ -38,12 +38,14 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    # 'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
     'ckeditor',
     'ckeditor_uploader',
     'mathfilters',
     'ecart',
     'django.contrib.humanize',
+    'storages'
 ]
 
 MIDDLEWARE = [
@@ -57,7 +59,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ROOT_URLCONF = 'ecommerce.urls'
 
@@ -141,22 +142,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
-# STATIC_URL = '/static/'
-# STATIC_ROOT =  os.path.join(BASE_DIR, 'static')
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # MEDIA_URL = '/media/'
 
-
-STATIC_URL = '/static/'
-MEDIA_URL = '/app/media/'
-
-if DEBUG:
-  STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-else:
-  STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -203,3 +194,12 @@ RAZORPAY_SECRET_KEY = 'x4zQpj3I6Afos9WNWMPkDvMn'
 COMPANY_NAME = 'Company Name'
 COMPANY_ADDRESS = 'South-East Road, Kingsway Hospital, Burdi, Nagpur - 440001'
 GST_NO = '27AAARS3214L1ZZ'
+
+# Amazon storage configurations
+
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'AKIA3G5HZVI7ADFQJ24J'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'aws3-django-projects'
+AWS_QUERYSTRING_AUTH = False
