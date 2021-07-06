@@ -146,8 +146,14 @@ html, body{
     }
 }
 
-@media screen and (min-width: 993px) {
+@media screen and  (min-width: 993px) and (max-width: 1500px) {
     #product_photo, .product_photo{
         height: 27.5rem;
+    }
+}
+
+@media screen and (min-width: 1501px){
+    #product_photo, .product_photo{
+        height: 35rem;
     }
 }
