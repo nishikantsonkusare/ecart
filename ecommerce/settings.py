@@ -27,7 +27,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['ecart-online.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -87,11 +87,11 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ddq5hevkjtotag',
-        'USER': 'inkyxcvfvvvswf',
-        'PASSWORD': '7f6ef7199fbb7e8ee38a0da47d9b1b27732e8e6d50ba62ad94b682642fc8dad3',
-        'HOST': 'ec2-52-6-77-239.compute-1.amazonaws.com',
-        'PORT': 5432,
+        'NAME': 'DATABASE_NAME',
+        'USER': 'USERNAME',
+        'PASSWORD': 'PASSWORD',
+        'HOST': 'HOSTNAME',
+        'PORT': 'PORT',
     }
 }
 
@@ -183,13 +183,13 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'lazzygamer2017@gmail.com'
-EMAIL_HOST_PASSWORD = 'nciokorjehunfknx'
+EMAIL_HOST_USER = 'YOUR EMAIL'
+EMAIL_HOST_PASSWORD = 'YOUR PASSWORD'
 
 # Razor Pay Setting
 
-RAZORPAY_KEY_ID = 'rzp_test_O19uhzuaO9OsaE'
-RAZORPAY_SECRET_KEY = 'x4zQpj3I6Afos9WNWMPkDvMn'
+RAZORPAY_KEY_ID = 'RAZER_PAY_ID'
+RAZORPAY_SECRET_KEY = 'RAZER_PAY_SECRET_CODE'
 
 COMPANY_NAME = 'Company Name'
 COMPANY_ADDRESS = 'South-East Road, Kingsway Hospital, Burdi, Nagpur - 440001'
